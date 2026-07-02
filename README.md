@@ -1,4 +1,4 @@
-# 💳 Financial Transactions Data Warehouse & Fraud Analytics
+# Financial Transactions Data Warehouse & Fraud Analytics
 
 An end-to-end Data Engineering and Business Intelligence project that builds a complete Data Warehouse for financial transactions and fraud analytics using the Microsoft BI Stack.
 
@@ -6,7 +6,7 @@ The project demonstrates the full data pipeline starting from raw CSV/JSON files
 
 ---
 
-## 🚀 Project Architecture
+## Project Architecture
 
 Raw Files (CSV / JSON)
         │
@@ -27,7 +27,9 @@ Power BI Dashboard
 
 ---
 
-## 📂 Data Sources
+##  Data Sources
+
+https://www.kaggle.com/datasets/computingvictor/transactions-fraud-datasets?
 
 The project uses five source files:
 
@@ -47,7 +49,7 @@ The dataset contains:
 
 ---
 
-## ⭐ Data Warehouse Design
+##  Data Warehouse Design
 
 ### Fact Table
 
@@ -66,7 +68,7 @@ The warehouse follows a **Star Schema** design to support high-performance analy
 
 ---
 
-## 🔄 ETL Process (SSIS)
+##  ETL Process (SSIS)
 
 The ETL pipeline consists of three layers:
 
@@ -96,7 +98,7 @@ Data cleansing including:
 
 ---
 
-## 📊 SSAS Tabular Model
+##  SSAS Tabular Model
 
 A semantic model was built using SQL Server Analysis Services (SSAS).
 
@@ -109,7 +111,7 @@ Features include:
 
 ---
 
-## 📈 Power BI Dashboard
+##  Power BI Dashboard
 
 The dashboard contains six pages:
 
@@ -132,7 +134,7 @@ KPIs include:
 
 ---
 
-## 📌 Business Questions Answered
+##  Business Questions Answered
 
 Examples include:
 
@@ -159,7 +161,7 @@ Examples include:
 
 ---
 
-## 📁 Repository Structure
+##  Repository Structure
 
 ```
 Financial-Transactions-DWH/
@@ -196,7 +198,7 @@ Financial-Transactions-DWH/
 
 ---
 
-## 📸 Dashboard Preview
+##  Dashboard Preview
 
 > Add dashboard screenshots inside the **Images** folder.
 
@@ -210,7 +212,7 @@ Example:
 
 ---
 
-## 👨‍💻 Author
+##  Author
 
 **Mohamed Saber**
 
