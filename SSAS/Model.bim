@@ -1,0 +1,639 @@
+{
+  "name": "SemanticModel",
+  "compatibilityLevel": 1200,
+  "model": {
+    "culture": "en-US",
+    "dataSources": [
+      {
+        "name": "SqlServer localhost Financial Transactions",
+        "connectionString": "Provider=SQLOLEDB;Data Source=.;Persist Security Info=false;Integrated Security=SSPI;Initial Catalog=Financial Transactions",
+        "impersonationMode": "impersonateServiceAccount",
+        "annotations": [
+          {
+            "name": "ConnectionEditUISource",
+            "value": "SqlServer"
+          }
+        ]
+      }
+    ],
+    "tables": [
+      {
+        "name": "DimMCC",
+        "columns": [
+          {
+            "name": "MccSK",
+            "dataType": "int64",
+            "sourceColumn": "MccSK",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "MCC_Description",
+            "dataType": "string",
+            "sourceColumn": "MCC_Description",
+            "sourceProviderType": "WChar"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "DimMCC",
+            "dataView": "full",
+            "source": {
+              "type": "query",
+              "query": " \t\t\t\tSELECT [DWH].[DimMCC].*   FROM [DWH].[DimMCC] ",
+              "dataSource": "SqlServer localhost Financial Transactions"
+            }
+          }
+        ],
+        "measures": [
+          {
+            "name": "MCC",
+            "expression": " COUNT(DimMCC[MccSK])"
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " \t\t\t\tSELECT [DWH].[DimMCC].*   FROM [DWH].[DimMCC] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "DimMCC"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "DWH"
+          }
+        ]
+      },
+      {
+        "name": "DimCards",
+        "columns": [
+          {
+            "name": "CardSK",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "CardSK",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "CardBrand",
+            "dataType": "string",
+            "sourceColumn": "CardBrand",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "CardType",
+            "dataType": "string",
+            "sourceColumn": "CardType",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "Expires",
+            "dataType": "string",
+            "sourceColumn": "Expires",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "HasChip",
+            "dataType": "string",
+            "sourceColumn": "HasChip",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "NumCardsIssued",
+            "dataType": "int64",
+            "sourceColumn": "NumCardsIssued",
+            "sourceProviderType": "SmallInt"
+          },
+          {
+            "name": "CreditLimit",
+            "dataType": "int64",
+            "sourceColumn": "CreditLimit",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "AcctOpenDate",
+            "dataType": "string",
+            "sourceColumn": "AcctOpenDate",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "YearPinLastChanged",
+            "dataType": "int64",
+            "sourceColumn": "YearPinLastChanged",
+            "sourceProviderType": "SmallInt"
+          },
+          {
+            "name": "CardOnDarkWeb",
+            "dataType": "string",
+            "sourceColumn": "CardOnDarkWeb",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "CreditLimitBand",
+            "dataType": "string",
+            "sourceColumn": "CreditLimitBand",
+            "sourceProviderType": "WChar"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "DimCards",
+            "dataView": "full",
+            "source": {
+              "type": "query",
+              "query": " \t\t\t\tSELECT [DWH].[DimCards].*   FROM [DWH].[DimCards] ",
+              "dataSource": "SqlServer localhost Financial Transactions"
+            }
+          }
+        ],
+        "measures": [
+          {
+            "name": "Card",
+            "expression": " COUNT(DimCards[CardSK])"
+          },
+          {
+            "name": "Fraud Cards",
+            "expression": [
+              " ",
+              "CALCULATE(",
+              "    DISTINCTCOUNT(FactTransactions[CardSK]),",
+              "    DimTrainFraudLabel[FraudStatus] = \"YES\"",
+              ")"
+            ]
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " \t\t\t\tSELECT [DWH].[DimCards].*   FROM [DWH].[DimCards] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "DimCards"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "DWH"
+          }
+        ]
+      },
+      {
+        "name": "DimClients",
+        "columns": [
+          {
+            "name": "Client SK",
+            "dataType": "int64",
+            "sourceColumn": "Client SK",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "ClientID",
+            "dataType": "int64",
+            "sourceColumn": "ClientID",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "RetirementAge",
+            "dataType": "int64",
+            "sourceColumn": "RetirementAge",
+            "sourceProviderType": "UnsignedTinyInt"
+          },
+          {
+            "name": "BirthYear",
+            "dataType": "int64",
+            "sourceColumn": "BirthYear",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "BirthMonth",
+            "dataType": "int64",
+            "sourceColumn": "BirthMonth",
+            "sourceProviderType": "UnsignedTinyInt"
+          },
+          {
+            "name": "Gender",
+            "dataType": "string",
+            "sourceColumn": "Gender",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "Latitude",
+            "dataType": "int64",
+            "sourceColumn": "Latitude",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "Longitude",
+            "dataType": "int64",
+            "sourceColumn": "Longitude",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "PerCapitaIncome",
+            "dataType": "int64",
+            "sourceColumn": "PerCapitaIncome",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "YearlyIncome",
+            "dataType": "int64",
+            "sourceColumn": "YearlyIncome",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "TotalDebt",
+            "dataType": "int64",
+            "sourceColumn": "TotalDebt",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "CreditScore",
+            "dataType": "int64",
+            "sourceColumn": "CreditScore",
+            "sourceProviderType": "SmallInt"
+          },
+          {
+            "name": "NumCreditCards",
+            "dataType": "int64",
+            "sourceColumn": "NumCreditCards",
+            "sourceProviderType": "UnsignedTinyInt"
+          },
+          {
+            "name": "IncomeBand",
+            "dataType": "string",
+            "sourceColumn": "IncomeBand",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "CreditScoreCategory",
+            "dataType": "string",
+            "sourceColumn": "CreditScoreCategory",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "LoadDate",
+            "dataType": "string",
+            "sourceColumn": "LoadDate",
+            "sourceProviderType": "WChar"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "DimClients",
+            "dataView": "full",
+            "source": {
+              "type": "query",
+              "query": " \t\t\t\tSELECT [DWH].[DimClients].*   FROM [DWH].[DimClients] ",
+              "dataSource": "SqlServer localhost Financial Transactions"
+            }
+          }
+        ],
+        "measures": [
+          {
+            "name": "Client",
+            "expression": [
+              " ",
+              "DISTINCTCOUNT(FactTransactions[Client SK])"
+            ]
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " \t\t\t\tSELECT [DWH].[DimClients].*   FROM [DWH].[DimClients] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "DimClients"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "DWH"
+          }
+        ]
+      },
+      {
+        "name": "DimMerchant",
+        "columns": [
+          {
+            "name": "MerchantSK",
+            "dataType": "int64",
+            "sourceColumn": "MerchantSK",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "MerchantCity",
+            "dataType": "string",
+            "sourceColumn": "MerchantCity",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "MerchantState",
+            "dataType": "string",
+            "sourceColumn": "MerchantState",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "Zip",
+            "dataType": "string",
+            "sourceColumn": "Zip",
+            "sourceProviderType": "WChar"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "DimMerchant",
+            "dataView": "full",
+            "source": {
+              "type": "query",
+              "query": " \t\t\t\tSELECT [DWH].[DimMerchant].*   FROM [DWH].[DimMerchant] ",
+              "dataSource": "SqlServer localhost Financial Transactions"
+            }
+          }
+        ],
+        "measures": [
+          {
+            "name": "Merchants",
+            "expression": " COUNT(DimMerchant[MerchantSK])"
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " \t\t\t\tSELECT [DWH].[DimMerchant].*   FROM [DWH].[DimMerchant] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "DimMerchant"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "DWH"
+          }
+        ]
+      },
+      {
+        "name": "DimTrainFraudLabel",
+        "columns": [
+          {
+            "name": "FraudSK",
+            "dataType": "int64",
+            "sourceColumn": "FraudSK",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "FraudStatus",
+            "dataType": "string",
+            "sourceColumn": "FraudStatus",
+            "sourceProviderType": "WChar"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "DimTrainFraudLabel",
+            "dataView": "full",
+            "source": {
+              "type": "query",
+              "query": " \t\t\t\tSELECT [DWH].[DimTrainFraudLabel].*   FROM [DWH].[DimTrainFraudLabel] ",
+              "dataSource": "SqlServer localhost Financial Transactions"
+            }
+          }
+        ],
+        "measures": [
+          {
+            "name": "Fraud Amount $",
+            "expression": [
+              " ",
+              "CALCULATE(",
+              "    [Transaction Amount],",
+              "    DimTrainFraudLabel[FraudStatus] = \"YES\"",
+              ")"
+            ]
+          },
+          {
+            "name": "Avg Fraud Amount",
+            "expression": [
+              " ",
+              "CALCULATE(",
+              "    AVERAGE(FactTransactions[Amount]),",
+              "    DimTrainFraudLabel[FraudStatus] = \"YES\"",
+              ")"
+            ]
+          },
+          {
+            "name": "Fraud Amount Rate",
+            "expression": [
+              " ",
+              "DIVIDE(",
+              "    [Fraud Amount $],",
+              "    [Transaction Amount]",
+              ")"
+            ]
+          },
+          {
+            "name": "Fraud Card Rate",
+            "expression": [
+              " ",
+              "DIVIDE(",
+              "    [Fraud Cards],",
+              "    [Card]",
+              ")"
+            ]
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " \t\t\t\tSELECT [DWH].[DimTrainFraudLabel].*   FROM [DWH].[DimTrainFraudLabel] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "DimTrainFraudLabel"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "DWH"
+          }
+        ]
+      },
+      {
+        "name": "FactTransactions",
+        "columns": [
+          {
+            "name": "TransactionSK",
+            "dataType": "int64",
+            "sourceColumn": "TransactionSK",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "TransactionID",
+            "dataType": "int64",
+            "sourceColumn": "TransactionID",
+            "sourceProviderType": "BigInt"
+          },
+          {
+            "name": "TransactionDate",
+            "dataType": "string",
+            "sourceColumn": "TransactionDate",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "Amount",
+            "dataType": "double",
+            "sourceColumn": "Amount",
+            "sourceProviderType": "Numeric"
+          },
+          {
+            "name": "UseChip",
+            "dataType": "string",
+            "sourceColumn": "UseChip",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "Errors",
+            "dataType": "string",
+            "sourceColumn": "Errors",
+            "sourceProviderType": "WChar"
+          },
+          {
+            "name": "CardSK",
+            "dataType": "int64",
+            "sourceColumn": "CardSK",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "MccSK",
+            "dataType": "int64",
+            "sourceColumn": "MccSK",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "Client SK",
+            "dataType": "int64",
+            "sourceColumn": "Client SK",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "MerchantSK",
+            "dataType": "int64",
+            "sourceColumn": "MerchantSK",
+            "sourceProviderType": "Integer"
+          },
+          {
+            "name": "FraudSK",
+            "dataType": "int64",
+            "sourceColumn": "FraudSK",
+            "sourceProviderType": "Integer"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "FactTransactions",
+            "dataView": "full",
+            "source": {
+              "type": "query",
+              "query": " \t\t\t\tSELECT [DWH].[FactTransactions].*   FROM [DWH].[FactTransactions] ",
+              "dataSource": "SqlServer localhost Financial Transactions"
+            }
+          }
+        ],
+        "measures": [
+          {
+            "name": "Avg Transaction Amount",
+            "expression": [
+              " ",
+              "AVERAGE(FactTransactions[Amount])"
+            ]
+          },
+          {
+            "name": "Max Transaction Amount",
+            "expression": [
+              " ",
+              "MAX(FactTransactions[Amount])"
+            ]
+          },
+          {
+            "name": "Min Transaction Amount",
+            "expression": [
+              " ",
+              "MIN(FactTransactions[Amount])"
+            ]
+          },
+          {
+            "name": "Transaction Amount",
+            "expression": [
+              " ",
+              "SUM(FactTransactions[Amount])"
+            ]
+          },
+          {
+            "name": "Transaction",
+            "expression": [
+              " ",
+              "COUNTROWS(FactTransactions)"
+            ]
+          }
+        ],
+        "annotations": [
+          {
+            "name": "_TM_ExtProp_QueryDefinition",
+            "value": " \t\t\t\tSELECT [DWH].[FactTransactions].*   FROM [DWH].[FactTransactions] "
+          },
+          {
+            "name": "_TM_ExtProp_DbTableName",
+            "value": "FactTransactions"
+          },
+          {
+            "name": "_TM_ExtProp_DbSchemaName",
+            "value": "DWH"
+          }
+        ]
+      }
+    ],
+    "relationships": [
+      {
+        "name": "6a760ab6-8e21-4f16-a214-d020aed81b94",
+        "fromTable": "FactTransactions",
+        "fromColumn": "CardSK",
+        "toTable": "DimCards",
+        "toColumn": "CardSK"
+      },
+      {
+        "name": "aeab2e7c-1799-4da1-8697-4221d5831d29",
+        "fromTable": "FactTransactions",
+        "fromColumn": "Client SK",
+        "toTable": "DimClients",
+        "toColumn": "Client SK"
+      },
+      {
+        "name": "e47fe2ca-904a-469c-bc74-c11e54880814",
+        "fromTable": "FactTransactions",
+        "fromColumn": "FraudSK",
+        "toTable": "DimTrainFraudLabel",
+        "toColumn": "FraudSK"
+      },
+      {
+        "name": "8ff342d2-d28a-4714-aa40-71a6fecebe8d",
+        "fromTable": "FactTransactions",
+        "fromColumn": "MccSK",
+        "toTable": "DimMCC",
+        "toColumn": "MccSK"
+      },
+      {
+        "name": "310e344f-d3b0-4c24-95cf-76d3927a1c0d",
+        "fromTable": "FactTransactions",
+        "fromColumn": "MerchantSK",
+        "toTable": "DimMerchant",
+        "toColumn": "MerchantSK"
+      }
+    ],
+    "annotations": [
+      {
+        "name": "ClientCompatibilityLevel",
+        "value": "400"
+      }
+    ]
+  },
+  "id": "SemanticModel"
+}
